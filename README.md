@@ -1,0 +1,2 @@
+# RaspberryPiSmartHome
+树莓派智能家居项目，学习树莓派的wiringpi用C语言开发，并且组合成一个智能家居项目
