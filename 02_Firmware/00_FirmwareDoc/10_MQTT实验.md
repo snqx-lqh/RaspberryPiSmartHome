@@ -37,6 +37,8 @@ ls /usr/local/lib
 
 ### 代码编写
 
+代码编写主要参考正点原子的Linux中的MQTT实验。
+
 流程如下
 
 1、创建MQTT客户端对象

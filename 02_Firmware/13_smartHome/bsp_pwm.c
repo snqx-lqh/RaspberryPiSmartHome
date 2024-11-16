@@ -31,6 +31,7 @@ void pwm_init()
     // delay(300);
 }
 
+
 void soft_pwm_init(uint8_t soft_pwm_pin,uint16_t max_count)
 {
     pinMode(soft_pwm_pin,OUTPUT); //设置引脚为 输出模式

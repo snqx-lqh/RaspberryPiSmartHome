@@ -16,7 +16,7 @@ Copyright (C) 1988-2020 Free Software Foundation, Inc.
 在法律允许的范围内没有其他保证。
 ```
 
-建立一个Makefile文件，我们先写一个简易的文件，Makefile就是一个编译和链接多个文件的工具，下面这个就是一个简单的例子，hello是目标文件，hello.cpp是依赖，再另起一行的就是怎么使用这个依赖生成目标。
+建立一个Makefile文件，我们先写一个简易的文件，Makefile就是一个编译和链接多个文件的工具，下面这个就是一个简单的例子，main是目标文件，`main.c bsp_led.c bsp_key.c bsp_beep.c`是依赖，再另起一行的就是怎么使用这个依赖生成目标。
 
 ```makefile
 main: main.c bsp_led.c bsp_key.c bsp_beep.c
@@ -45,6 +45,12 @@ make
 .PHONY: clean
 clean:
 	rm main
+```
+
+使用clean相关的任务的话，只需要
+
+```makefile
+make clean
 ```
 
 ### 依赖检查

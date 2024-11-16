@@ -23,38 +23,48 @@
 
 #define WILL_TOPIC		"lqh/pi/will"		    //遗嘱主题
 
+#define CHUFANG_TOPIC    "/lqh/pi/chufang"
+#define WOSHI_TOPIC      "/lqh/pi/woshi"
+#define KETING_TOPIC     "/lqh/pi/keting"
+#define YUSHI_TOPIC      "/lqh/pi/yushi"
+#define MENCHUANG_TOPIC  "/lqh/pi/menchuang"
+#define DACLED_TOPIC     "/lqh/pi/dacled"
+#define TMP_TOPIC        "/lqh/pi/tmp"
+#define RH_TOPIC         "/lqh/pi/rh"
+#define LIGHT_TOPIC      "/lqh/pi/light"
+
 //接收到消息的回调函数
 static int msgarrvd(void *context, char *topicName, int topicLen,
 			MQTTClient_message *message)
 { 
 	uint8_t temp_num = 0;
     printf("%16sReceived message on topic %s: %.*s\n","[thread_mqtt]:", topicName, (int)message->payloadlen, (char *)message->payload);
-	if (!strcmp(topicName, "/lqh/pi/chufang")) {//校验消息的主题
+	if (!strcmp(topicName, CHUFANG_TOPIC)) {//校验消息的主题
 		temp_num = atoi(message->payload);
 		fflush ( stdout ) ;
 		set_led_level(LED2,temp_num);
-	}else if(!strcmp(topicName, "/lqh/pi/woshi"))
+	}else if(!strcmp(topicName, WOSHI_TOPIC))
 	{
 		temp_num = atoi(message->payload);
 		fflush ( stdout ) ;
 		set_led_level(LED3,temp_num);
-	}else if(!strcmp(topicName, "/lqh/pi/keting"))
+	}else if(!strcmp(topicName, KETING_TOPIC))
 	{
 		temp_num = atoi(message->payload);
 		fflush ( stdout ) ;
 		set_led_level(LED4,temp_num);
-	}else if(!strcmp(topicName, "/lqh/pi/yushi"))
+	}else if(!strcmp(topicName, YUSHI_TOPIC))
 	{
 		temp_num = atoi(message->payload);
 		fflush ( stdout ) ;
 		set_led_level(LED5,temp_num);
-	}else if(!strcmp(topicName, "/lqh/pi/menchuang"))
+	}else if(!strcmp(topicName, MENCHUANG_TOPIC))
 	{
 		temp_num = atoi(message->payload);
 		fflush ( stdout ) ;
 		if(temp_num == 0) soft_pwm_set_count(PWM1,5);
 		else if(temp_num == 1)  soft_pwm_set_count(PWM1,25);
-	}else if(!strcmp(topicName, "/lqh/pi/dacled"))
+	}else if(!strcmp(topicName, DACLED_TOPIC))
 	{
 		temp_num = atoi(message->payload);
 		fflush ( stdout ) ;
@@ -130,39 +140,39 @@ void *thread_mqtt(void *parameter)
 		rc = EXIT_FAILURE;
 	}
 
-	/* 订阅主题 */
+	/* 订阅主题 厨房相关 */
 	if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_subscribe(client, "/lqh/pi/chufang", 0))) {
+			(rc = MQTTClient_subscribe(client, CHUFANG_TOPIC, 0))) {
 		printf("Failed to subscribe, return code %d\n", rc);
 		rc = EXIT_FAILURE;
 	}
 
 	if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_subscribe(client, "/lqh/pi/woshi", 0))) {
+			(rc = MQTTClient_subscribe(client, WOSHI_TOPIC, 0))) {
 		printf("Failed to subscribe, return code %d\n", rc);
 		rc = EXIT_FAILURE;
 	}
 
 	if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_subscribe(client, "/lqh/pi/keting", 0))) {
+			(rc = MQTTClient_subscribe(client, KETING_TOPIC, 0))) {
 		printf("Failed to subscribe, return code %d\n", rc);
 		rc = EXIT_FAILURE;
 	}
 
 	if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_subscribe(client, "/lqh/pi/yushi", 0))) {
+			(rc = MQTTClient_subscribe(client, YUSHI_TOPIC, 0))) {
 		printf("Failed to subscribe, return code %d\n", rc);
 		rc = EXIT_FAILURE;
 	}
 
 	if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_subscribe(client, "/lqh/pi/menchuang", 0))) {
+			(rc = MQTTClient_subscribe(client, MENCHUANG_TOPIC, 0))) {
 		printf("Failed to subscribe, return code %d\n", rc);
 		rc = EXIT_FAILURE;
 	}
 
 	if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_subscribe(client, "/lqh/pi/dacled", 0))) {
+			(rc = MQTTClient_subscribe(client, DACLED_TOPIC, 0))) {
 		printf("Failed to subscribe, return code %d\n", rc);
 		rc = EXIT_FAILURE;
 	}
@@ -188,7 +198,7 @@ void *thread_mqtt(void *parameter)
 		tempmsg.qos = 0;				//QoS等级
 		tempmsg.retained = 1;		//保留消息
 		if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_publishMessage(client, "/lqh/pi/tmp", &tempmsg, NULL))) {
+			(rc = MQTTClient_publishMessage(client, TMP_TOPIC, &tempmsg, NULL))) {
 			printf("Failed to publish message, return code %d\n", rc);
 			rc = EXIT_FAILURE;
 		}
@@ -197,7 +207,7 @@ void *thread_mqtt(void *parameter)
 		tempmsg.qos = 0;				//QoS等级
 		tempmsg.retained = 1;		//保留消息
 		if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_publishMessage(client, "/lqh/pi/rh", &tempmsg, NULL))) {
+			(rc = MQTTClient_publishMessage(client, RH_TOPIC, &tempmsg, NULL))) {
 			printf("Failed to publish message, return code %d\n", rc);
 			rc = EXIT_FAILURE;
 		}
@@ -206,7 +216,7 @@ void *thread_mqtt(void *parameter)
 		tempmsg.qos = 0;				//QoS等级
 		tempmsg.retained = 1;		//保留消息
 		if (MQTTCLIENT_SUCCESS !=
-			(rc = MQTTClient_publishMessage(client, "/lqh/pi/light", &tempmsg, NULL))) {
+			(rc = MQTTClient_publishMessage(client, LIGHT_TOPIC, &tempmsg, NULL))) {
 			printf("Failed to publish message, return code %d\n", rc);
 			rc = EXIT_FAILURE;
 		}

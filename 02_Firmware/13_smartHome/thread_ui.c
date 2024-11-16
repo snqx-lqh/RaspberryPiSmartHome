@@ -47,8 +47,8 @@ void set_ui_data_dht11(uint8_t *RH_DATA,uint8_t *TMP_DATA)
 {
     if(RH_DATA == NULL && TMP_DATA == NULL)
         return;
-    ui_data.tmp = *RH_DATA;
-    ui_data.rh  = *TMP_DATA;
+    ui_data.tmp = *TMP_DATA;
+    ui_data.rh  = *RH_DATA;
 }
 
 void set_ui_data_light_adc(uint8_t *light_adc)
