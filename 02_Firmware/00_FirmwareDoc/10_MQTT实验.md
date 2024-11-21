@@ -37,7 +37,7 @@ ls /usr/local/lib
 
 ### 代码编写
 
-代码编写主要参考正点原子的Linux中的MQTT实验。
+代码编写主要参考**正点原子的Linux中的MQTT实验**。
 
 流程如下
 
